@@ -32,4 +32,4 @@ This note describes how AI was used to produce this MVP. The parent reviewer may
 - `npm run build`
 - Manual HTTP checks: login, list owned vs shared, patch content, share, upload `.md`
 
-Correctness of rich text after refresh depends on storing TipTap JSON and loading it with `setContent` — that path was implemented and exercised rather than trusted from a generated snippet.
+Correctness of rich text after refresh depends on storing TipTap JSON and loading it with `setContent` — that path was implemented and exercised rather than trusted from a generated snippet. A TipTap v3 StarterKit already includes underline; a duplicate Underline extension was removed after a console warning showed up in browser verification.

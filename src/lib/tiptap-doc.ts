@@ -1,7 +1,7 @@
-export const EMPTY_DOC = {
+export const EMPTY_DOC: TiptapDoc = {
   type: "doc",
   content: [{ type: "paragraph" }],
-} as const;
+};
 
 export type TiptapDoc = {
   type: "doc";

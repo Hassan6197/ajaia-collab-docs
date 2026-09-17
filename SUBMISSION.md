@@ -44,6 +44,7 @@ SQLite needs a persistent disk. Railway’s free/hobby volume is the least surpr
 4. Set environment variables:
    - `DATABASE_URL=file:/data/prod.db`
    - `SESSION_SECRET=` a long random string
+   - `COOKIE_SECURE=true` (HTTPS only; omit for local `npm start` on http://localhost)
    - `NODE_ENV=production`
 5. Set the start command to:
    ```bash

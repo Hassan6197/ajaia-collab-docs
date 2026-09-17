@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Banner } from "./Banner";
 import { EditorToolbar } from "./EditorToolbar";
@@ -66,7 +65,6 @@ export function DocumentEditor({ documentId }: { documentId: string }) {
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-      Underline,
       Placeholder.configure({ placeholder: "Start writing…" }),
     ],
     editorProps: {
@@ -98,7 +96,7 @@ export function DocumentEditor({ documentId }: { documentId: string }) {
       }
       setDoc(data.document);
       setTitle(data.document.title);
-      editor?.commands.setContent(data.document.content);
+      editor?.commands.setContent(JSON.parse(JSON.stringify(data.document.content)) as object);
     }
     if (editor) void load();
     return () => {
