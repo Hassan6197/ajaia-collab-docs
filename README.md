@@ -71,6 +71,10 @@ Real-time CRDT / presence, comments, suggestions, version history, PDF/DOCX expo
 
 ## Deploy
 
-There is **no live URL in this submission** (no free persistent host was configured with secrets). A production build succeeds locally (`npm run build`). Exact free-tier steps are in [SUBMISSION.md](SUBMISSION.md).
+Live app: [https://ajaia-collab-docs-production-5aff.up.railway.app](https://ajaia-collab-docs-production-5aff.up.railway.app)
 
-SQLite is a local file (`prisma/dev.db`). It is the right default for reviewers and for a single-VM host (Railway volume, Fly.io, a VPS). It is **not** durable on Vercel’s ephemeral filesystem unless you switch the datasource to Turso/libSQL.
+Use that URL only. An older Railway hostname ending in `d57a` returns 502.
+
+Railway hosts the service with a volume at `/data`. Env: `DATABASE_URL=file:/data/prod.db`, `SESSION_SECRET` set, `COOKIE_SECURE=true`, `NODE_ENV=production`. Seeded accounts are the same as above (`ada@ajaia.dev` / `docs1234`, etc.).
+
+Local SQLite (`prisma/dev.db`) still works for `npm run dev`. Recreate-from-scratch steps are in [SUBMISSION.md](SUBMISSION.md). SQLite on a single VM/volume is durable; it is **not** durable on Vercel’s ephemeral filesystem unless you switch the datasource to Turso/libSQL.

@@ -17,7 +17,6 @@ End-to-end local flow: sign in → create/open → format → save → refresh �
 
 ## Incomplete / not in this slice
 
-- No public live URL (see deploy below)
 - No realtime collaboration, comments, history, PDF export, SSO, or mobile layout pass
 - Sharing cannot invite unknown emails (by design)
 
@@ -30,28 +29,37 @@ End-to-end local flow: sign in → create/open → format → save → refresh �
 
 ## Live URL
 
-**None.** Review locally with `npm install && npm run setup && npm run dev`.
+**https://ajaia-collab-docs-production-5aff.up.railway.app**
 
-A production build is expected to succeed: `npm run build && npm start`.
+Use this hostname only. An older Railway domain ending in `d57a` returns 502.
+
+Same seeded accounts as the README: `ada@ajaia.dev` / `docs1234` (also `alan@ajaia.dev` and `grace@ajaia.dev`).
+
+Local review still works: `npm install && npm run setup && npm run dev`. Production build: `npm run build && npm start`.
 
 ## Exact free-tier deploy (Railway)
 
-SQLite needs a persistent disk. Railway’s free/hobby volume is the least surprising option.
+This is already running as a Railway project/service with a volume at `/data`.
 
-1. Push this repo to GitHub (already the source of truth).
+Configured env:
+
+- `DATABASE_URL=file:/data/prod.db`
+- `SESSION_SECRET` set
+- `COOKIE_SECURE=true`
+- `NODE_ENV=production`
+
+To recreate:
+
+1. Push this repo to GitHub.
 2. Create a project at [railway.app](https://railway.app) → **Deploy from GitHub** → this repository.
 3. Add a **volume** mounted at `/data`.
-4. Set environment variables:
-   - `DATABASE_URL=file:/data/prod.db`
-   - `SESSION_SECRET=` a long random string
-   - `COOKIE_SECURE=true` (HTTPS only; omit for local `npm start` on http://localhost)
-   - `NODE_ENV=production`
-5. Set the start command to:
+4. Set the env vars above (`SESSION_SECRET` = a long random string).
+5. Start command:
    ```bash
    npx prisma migrate deploy && npx prisma db seed && npm start
    ```
-   Or use the `start` script after a release build. Railway’s Nixpacks will run `npm install` (which `prisma generate`s via `postinstall`) and `npm run build` if `build` is detected.
-6. Open the public Railway URL, sign in with `ada@ajaia.dev` / `docs1234`.
+   Railway’s Nixpacks will run `npm install` (which `prisma generate`s via `postinstall`) and `npm run build` if `build` is detected.
+6. Open the public URL (the `5aff` hostname), sign in with `ada@ajaia.dev` / `docs1234`.
 
 Re-seeding on every start resets demo data. For a sticky demo, run seed **once** (Railway one-off command) and use `npx prisma migrate deploy && npm start` as the start command.
 
